@@ -7,7 +7,7 @@ class ReusableDialog extends HTMLElement {
     }
 
     connectedCallback() {
-        // Get the message of the dialogue;
+        // Get the DialogId and message of the dialogue;
         this.dialogId = this.getAttribute("dialogId");
         this.message = this.getAttribute("message");
         this.render();
