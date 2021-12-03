@@ -1,33 +1,36 @@
-// Extend a reusable dialog component from thr native HTMLDialogElement
-class ReusableDialog extends HTMLDialogElement {
+// Extend a reusable dialog component from the HTMLElement
+class ReusableDialog extends HTMLElement {
     constructor() {
         super();
         this.message = "";
+        this.dialogId = "";
     }
 
     connectedCallback() {
         // Get the message of the dialogue;
+        this.dialogId = this.getAttribute("dialogId");
         this.message = this.getAttribute("message");
         this.render();
     }
 
     render() {
         this.innerHTML = `
+        <dialog id='${this.dialogId}'>
             <form method="dialog">
                 <p>${this.message}</p>
                 <button value="Yes">Yes</button>
                 <button value="Cancel">Cancel</button>
             </form>
+        </dialog>
         `
     }
 }
 
-customElements.define('reusable-dialog', ReusableDialog, {
-    extends: 'dialog'
-});
+customElements.define('reusable-dialog', ReusableDialog);
 
 
-var mainDialog = document.getElementById('mainDialog');
+let mainDialog = document.getElementById('mainDialog');
+let message = document.getElementById('output');
 
 // Display the dialog
 mainBtn.addEventListener('click', function onOpen() {
@@ -36,5 +39,5 @@ mainBtn.addEventListener('click', function onOpen() {
 
 // Change the text with the status
 mainDialog.addEventListener('close', function onClose() {
-  outputBox.value = "You just clicked " + mainDialog.returnValue;
+    message.value = "You just clicked " + mainDialog.returnValue;
 });
